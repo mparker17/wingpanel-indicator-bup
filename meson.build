@@ -17,6 +17,10 @@ dependencies = [
 ]
 
 files = [
+    'src/Model/BackupState.vala',
+    'src/Controller/BackupManager.vala',
+    'src/Widgets/SnoozeBackupSwitch.vala',
+    'src/Widgets/PopoverWidget.vala',
     'src/Indicator.vala'
 ]
 

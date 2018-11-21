@@ -17,12 +17,15 @@
  * Authored by: M Parker <mparker17@users.noreply.github.com>
  */
 
-public class Bup.Indicator : Wingpanel.Indicator {
-    /* The drop-down that appears when you click on the display_icon. */
-    private Gtk.Grid main_grid;
+public class WingpanelIndicatorBup.Indicator : Wingpanel.Indicator {
+    /* The icon shown in the panel. */
+    private Gtk.Image display_widget;
 
-    /* The icon shown in the Wingpanel, i.e.: that a user clicks on. */
-    private Gtk.Image display_icon;
+    /* A widget to display when the indicator icon is clicked. */
+    private WingpanelIndicatorBup.Widgets.PopoverWidget? popover_widget = null;
+
+    /* The state of the backup system this indicator is indicating. */
+    public WingpanelIndicatorBup.BackupState backup_state { get; set; default = BackupState.IDLE; }
 
     public Indicator () {
         Object (
@@ -33,22 +36,19 @@ public class Bup.Indicator : Wingpanel.Indicator {
     }
 
     public override Gtk.Widget get_display_widget () {
-        if (display_icon == null) {
-            this.display_icon = new Gtk.Image.from_icon_name ("document-open-recent-symbolic", Gtk.IconSize.MENU);
+        if (display_widget == null) {
+            this.display_widget = new Gtk.Image.from_icon_name (backup_state.getIconName(), Gtk.IconSize.MENU);
         }
 
-        return display_icon;
+        return display_widget;
     }
 
     public override Gtk.Widget? get_widget () {
-        if (main_grid == null) {
-            main_grid = new Gtk.Grid ();
-            main_grid.set_orientation (Gtk.Orientation.VERTICAL);
-
-            main_grid.show_all ();
+        if (popover_widget == null) {
+            popover_widget = new WingpanelIndicatorBup.Widgets.PopoverWidget (this);
         }
 
-        return main_grid;
+        return popover_widget;
     }
 
     public override void opened () { }
@@ -61,7 +61,9 @@ public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorMan
     if (server_type != Wingpanel.IndicatorManager.ServerType.SESSION) {
         return null;
     }
-    debug ("Activating mparker17 widget");
-    var indicator = new Bup.Indicator ();
+
+    debug ("Activating wingpanel-indicator-bup widget");
+
+    var indicator = new WingpanelIndicatorBup.Indicator ();
     return indicator;
 }
