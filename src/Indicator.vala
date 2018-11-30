@@ -19,7 +19,7 @@
 
 public class WingpanelIndicatorBup.Indicator : Wingpanel.Indicator {
     /* The icon shown in the panel. */
-    private Gtk.Image display_widget;
+    private Wingpanel.Widgets.OverlayIcon display_widget;
 
     /* A widget to display when the indicator icon is clicked. */
     private WingpanelIndicatorBup.Widgets.PopoverWidget? popover_widget = null;
@@ -37,7 +37,7 @@ public class WingpanelIndicatorBup.Indicator : Wingpanel.Indicator {
 
     public override Gtk.Widget get_display_widget () {
         if (display_widget == null) {
-            this.display_widget = new Gtk.Image.from_icon_name (backup_state.getIconName(), Gtk.IconSize.MENU);
+            display_widget = new Wingpanel.Widgets.OverlayIcon (backup_state.getIconName());
         }
 
         return display_widget;
