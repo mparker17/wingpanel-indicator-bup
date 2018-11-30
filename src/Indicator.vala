@@ -33,6 +33,7 @@ public class WingpanelIndicatorBup.Indicator : Wingpanel.Indicator {
             display_name: _("Bup backup system"),
             description:_("A backup system indicator for Bup")
         );
+        this.visible = true;
     }
 
     public override Gtk.Widget get_display_widget () {
